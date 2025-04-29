@@ -65,7 +65,7 @@ void	process_input_request(std::string const& file_name, BitcoinExchange const& 
 {
 	std::string line;
 	
-	std::ifstream	input_file_stream(file_name);
+	std::ifstream input_file_stream(file_name.c_str());
 	if (!input_file_stream.is_open()) 
 		throw std::invalid_argument("Error: could not open the input file");
 	if (!std::getline(input_file_stream, line))

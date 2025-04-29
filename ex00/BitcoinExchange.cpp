@@ -19,20 +19,29 @@ void	BitcoinExchange::_importDatabase(std::string const& fname)
 {
 	std::string line;
 	
-	std::ifstream	ifs(fname);
-    if (!ifs.is_open()) 
+	std::ifstream ifs(fname.c_str());
+    if (!ifs.is_open())
+	{
         throw std::invalid_argument("Error: could not open the database file");
+	}
 	if (!std::getline(ifs, line))
+	{
 		throw	std::invalid_argument("Error while reading database header.");
+	}
 	if (line.compare("date,exchange_rate") != 0)
+	{
 		throw	std::invalid_argument("Error: wrong database header");
-	
+	}	
 	while (std::getline(ifs, line))
 		this->_processDataLine(line);
 	if (ifs.bad())
+	{
 		throw	std::invalid_argument("Error while reading database");
+	}
 	if (this->_table.size() == 0)
+	{
 		throw	std::invalid_argument("Error: database is empty");
+	}
 	return ;
 }
 
