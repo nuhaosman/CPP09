@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include <cctype>
+# include <cstdlib>
 # include <string>
 # include <stack>
  //arthoooooothooooccsss cononnicsslllllll
