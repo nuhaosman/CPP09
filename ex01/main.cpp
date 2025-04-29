@@ -15,4 +15,5 @@ int main(int ac, char** av)
 	{
 		std::cout << e.what() << std::endl;
 	}
+	return 0;
 }
