@@ -8,6 +8,22 @@ BitcoinExchange::BitcoinExchange(void)
 }
 
 
+BitcoinExchange::BitcoinExchange(BitcoinExchange const& other)
+{
+	this->_table = other._table;
+}
+
+
+BitcoinExchange& BitcoinExchange::operator=(BitcoinExchange const& other)
+{
+	if (this != &other)
+	{
+		this->_table = other._table;
+	}
+	return *this;
+}
+
+
 BitcoinExchange::~BitcoinExchange(void)
 {
 	//std::cout << "Default deconstructor is called" << std::endl;
@@ -20,9 +36,9 @@ void	BitcoinExchange::_importDatabase(std::string const& fname)
 	std::string line;
 	
 	std::ifstream ifs(fname.c_str());
-    if (!ifs.is_open())
+	if (!ifs.is_open())
 	{
-        throw std::invalid_argument("Error: could not open the database file");
+		throw std::invalid_argument("Error: could not open the database file");
 	}
 	if (!std::getline(ifs, line))
 	{
@@ -94,37 +110,37 @@ float	BitcoinExchange::getPrice(std::string const& date) const
 
 void BitcoinExchange::_checkDateValid(std::string const& date) const
 {
-    if (date.size() != 10 || date[4] != '-' || date[7] != '-')
+	if (date.size() != 10 || date[4] != '-' || date[7] != '-')
 	{
-        throw std::invalid_argument(std::string("Error: bad input => ").append(date));
-    }
+		throw std::invalid_argument(std::string("Error: bad input => ").append(date));
+	}
 
 
-    int year = atoi(date.substr(0, 4).c_str());
-    int month = atoi(date.substr(5, 2).c_str());
-    int day = atoi(date.substr(8, 2).c_str());
+	int year = atoi(date.substr(0, 4).c_str());
+	int month = atoi(date.substr(5, 2).c_str());
+	int day = atoi(date.substr(8, 2).c_str());
 
-    if (year < 2009)
+	if (year < 2009)
 	{
-        throw std::invalid_argument(std::string("Error: btc value starts in 2009 => ").append(date));
-    }
-    if (month < 1 || month > 12 || day < 1 || day > 31) {
-        throw std::invalid_argument(std::string("Error: invalid date => ").append(date));
-    }
+		throw std::invalid_argument(std::string("Error: btc value starts in 2009 => ").append(date));
+	}
+	if (month < 1 || month > 12 || day < 1 || day > 31) {
+		throw std::invalid_argument(std::string("Error: invalid date => ").append(date));
+	}
 
-    time_t now = time(0);
-    struct tm tm;
-    tm.tm_sec = 0;
-    tm.tm_min = 0;
-    tm.tm_hour = 0;
-    tm.tm_mday = day;
-    tm.tm_mon = month - 1;
-    tm.tm_year = year - 1900;
-    tm.tm_isdst = -1;
+	time_t now = time(0);
+	struct tm tm;
+	tm.tm_sec = 0;
+	tm.tm_min = 0;
+	tm.tm_hour = 0;
+	tm.tm_mday = day;
+	tm.tm_mon = month - 1;
+	tm.tm_year = year - 1900;
+	tm.tm_isdst = -1;
 
-    time_t etime = mktime(&tm);
-    if (etime > now)
+	time_t etime = mktime(&tm);
+	if (etime > now)
 	{
-        throw std::invalid_argument(std::string("Error: this program doesn't make future prediction => ").append(date));
-    }
+		throw std::invalid_argument(std::string("Error: this program doesn't make future prediction => ").append(date));
+	}
 }

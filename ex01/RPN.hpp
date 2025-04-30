@@ -6,13 +6,13 @@
 # include <cstdlib>
 # include <string>
 # include <stack>
- //arthoooooothooooccsss cononnicsslllllll
+
 class RPN
 {
 	public:
-		RPN(std::string const&);
-		RPN(void);
-		RPN(RPN const&);
+		RPN(std::string const& input);
+		// RPN(void);
+		RPN(RPN const& copy);
 		RPN&	operator=(RPN const&);
 		~RPN(void);
 

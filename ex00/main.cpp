@@ -6,7 +6,7 @@ void	get_date_and_amount(std::string const& line, std::string& date, float& floa
 	std::string	amount;
 	char *endptr = NULL;
 
-	if (line[10] != ' ' || line[11] != '|' || line[12] != ' ')
+	if (line.length() < 14 || line[10] != ' ' || line[11] != '|' || line[12] != ' ')
 		throw std::invalid_argument(std::string("Error: bad input(space/pipe)=> ").append(line));
 	date = line.substr(0, 10);	
 	amount = line.substr(13);
@@ -52,12 +52,16 @@ void	process_request_line(std::string const& line, BitcoinExchange const& btx)
 	catch (std::exception const& e)
 	{
 		std::cout << e.what() << std::endl;
-		return ; //////////////////////////////
+		return ;
 	}
 	if (isFloat)
-		std::cout << date << " => " << float_amount << " = " << price * float_amount << std::endl;
-	else
-		std::cout << date << " => " << int_amount << " = " << price * int_amount << std::endl;
+        std::cout << date << " => " << std::fixed << std::setprecision(2) << float_amount << " = " << std::fixed << std::setprecision(2) << price * float_amount << std::endl;
+    else
+        std::cout << date << " => " << std::fixed << std::setprecision(2) << int_amount << " = " << std::fixed << std::setprecision(2) << price * int_amount << std::endl;
+	// if (isFloat)
+	// 	std::cout << date << " => " << float_amount << " = " << price * float_amount << std::endl;
+	// else
+	// 	std::cout << date << " => " << int_amount << " = " << price * int_amount << std::endl;
 }
 
 

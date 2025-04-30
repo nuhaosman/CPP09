@@ -3,14 +3,31 @@
 
 RPN::RPN(std::string const& input)
 {
-    //std::cout << "RPN param ctor called" << std::endl;
+    //std::cout << "Default constructor is called" << std::endl;
     this->check_input(input);
 }
 
+
+RPN::RPN(RPN const& copy) : _stack(copy._stack)
+{
+
+}
+
+
+RPN& RPN::operator=(RPN const& other)
+{
+    if (this != &other) {
+        _stack = other._stack;
+    }
+    return *this;
+}
+
+
 RPN::~RPN(void)
 {
-    //std::cout << "RPN dtor called" << std::endl;
+    //std::cout << "Default deconstructor is called" << std::endl;
 }
+
 
 void RPN::check_input(std::string const& input)
 {
